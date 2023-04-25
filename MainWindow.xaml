@@ -16,6 +16,6 @@
         <Button x:Name="btnEdit" Content="Редактирование" HorizontalAlignment="Left" Margin="180,15,0,0" VerticalAlignment="Top" Click="btnEdit_Click" Grid.Row="1" />
 
         <Canvas x:Name="canvas" Width="800" Height="300" Background="White" Margin="0,47,0,67" Grid.Row="1"
-                MouseLeftButtonDown="canvas_MouseLeftButtonDown" MouseMove="canvas_MouseMove"/>
+                MouseLeftButtonDown="canvas_MouseLeftButtonDown" MouseLeftButtonUp="canvas_MouseLeftButtonUp"/>
     </Grid>
 </Window>
