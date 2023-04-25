@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -13,6 +10,8 @@ namespace GraphicEditorApplication {
         }
 
         private string? mode = null;
+        private Point startPoint, endPoint; 
+
 
         private void btnCreate_Click(object sender, RoutedEventArgs e) => mode = "create";
 
@@ -23,27 +22,28 @@ namespace GraphicEditorApplication {
         private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
             switch (mode) {
                 case "create":
-                    Point startPoint = e.GetPosition(canvas);
-                    Line newLine = new Line {
-                        X1 = startPoint.X,
-                        Y1 = startPoint.Y,
-                        Stroke = Brushes.Black,
-                        StrokeThickness = 2
-                    };
-                    canvas.Children.Add(newLine);
+                    startPoint = e.GetPosition(canvas);
 
                     break;
             }
         }
 
-        private void canvas_MouseMove(object sender, MouseEventArgs e) {
+        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) {
             switch (mode) {
                 case "create":
-                    if (canvas.Children.Count > 0) {
-                        Line line = (Line)canvas.Children[canvas.Children.Count - 1];
-                        line.X2 = e.GetPosition(canvas).X;
-                        line.Y2 = e.GetPosition(canvas).Y;
-                    }
+                    endPoint = e.GetPosition(canvas);
+
+                    Line newLine = new() {
+                        X1 = startPoint.X, Y1 = startPoint.Y,
+                        X2 = endPoint.X, Y2 = endPoint.Y,
+
+                        Stroke = Brushes.Black, StrokeThickness = 2
+                    };
+
+                    canvas.Children.Add(newLine);
+
+                    startPoint.X = 0; startPoint.Y = 0;
+                    endPoint.X = 0; endPoint.Y = 0;
 
                     break;
             }
